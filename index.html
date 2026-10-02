@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Alert</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #000;
+    color: #00ff41;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+}
+
+#screen {
+    min-height: 100vh;
+    padding: 25px;
+}
+
+.warning {
+    color: red;
+    text-align: center;
+    font-size: 45px;
+    animation: blink .5s infinite;
+}
+
+#terminal {
+    height: 65vh;
+    border: 2px solid #00ff41;
+    padding: 20px;
+    box-shadow: 0 0 25px #00ff41;
+    overflow: hidden;
+}
+
+.line {
+    margin: 8px 0;
+}
+
+.danger {
+    color: red;
+}
+
+#countdown {
+    display: none;
+    text-align: center;
+    font-size: 80px;
+    color: red;
+    margin-top: 20px;
+}
+
+#final {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#final h1 {
+    color: red;
+    font-size: 90px;
+    animation: shake .12s infinite;
+}
+
+#final p {
+    color: white;
+    font-size: 35px;
+}
+
+@keyframes blink {
+    50% { opacity: .2; }
+}
+
+@keyframes shake {
+    0% { transform: translate(3px, 2px); }
+    50% { transform: translate(-3px, -2px); }
+    100% { transform: translate(2px, -3px); }
+}
+</style>
+</head>
+
+<body>
+
+<div id="screen">
+
+    <div class="warning">
+        ⚠ SYSTEM BREACH ⚠
+    </div>
+
+    <div id="terminal"></div>
+
+    <div id="countdown"></div>
+
+</div>
+
+<div id="final">
+    <h1>FAHHHHHH 😂</h1>
+    <p>YOU GOT PRANKED!</p>
+</div>
+
+<script>
+
+const messages = [
+    "[+] Connecting to system...",
+    "[+] Establishing encrypted connection...",
+    "[+] Scanning security systems...",
+    "[+] Searching for vulnerabilities...",
+    "[+] Checking firewall...",
+    "[!] SECURITY WARNING DETECTED",
+    "[+] Running security protocol...",
+    "[+] Access sequence initialized...",
+    "[!] UNAUTHORIZED ACCESS DETECTED",
+    "[+] Performing final scan..."
+];
+
+const terminal = document.getElementById("terminal");
+const countdown = document.getElementById("countdown");
+
+let i = 0;
+
+function showLine() {
+
+    if (i < messages.length) {
+
+        const line = document.createElement("div");
+
+        line.className = "line";
+
+        if (messages[i].includes("[!]")) {
+            line.classList.add("danger");
+        }
+
+        line.textContent = messages[i];
+
+        terminal.appendChild(line);
+
+        i++;
+
+        setTimeout(showLine, 550);
+
+    } else {
+
+        startCountdown();
+
+    }
+}
+
+function startCountdown() {
+
+    countdown.style.display = "block";
+
+    let number = 5;
+
+    countdown.textContent = "SYSTEM LOCK IN " + number;
+
+    const timer = setInterval(() => {
+
+        number--;
+
+        if (number > 0) {
+
+            countdown.textContent =
+                "SYSTEM LOCK IN " + number;
+
+        } else {
+
+            clearInterval(timer);
+
+            countdown.style.display = "none";
+
+            document.getElementById("final").style.display = "flex";
+
+            playBeep();
+
+        }
+
+    }, 1000);
+}
+
+function playBeep() {
+
+    try {
+
+        const audio = new Audio(
+            "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="
+        );
+
+        audio.play().catch(() => {});
+
+    } catch (e) {}
+
+}
+
+showLine();
+
+</script>
+
+</body>
+</html>
